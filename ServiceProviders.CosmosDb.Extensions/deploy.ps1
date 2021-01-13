@@ -5,7 +5,7 @@ $extensionNameServiceProvider = $extensionName+"ServiceProvider"
 $userprofile = [environment]::GetFolderPath('USERPROFILE')
 $dll = $extensionPath+"\netcoreapp3.1\Microsoft.Azure.Workflows.ServiceProvider.Extensions.CosmosDB.dll"
 
-$extensionModulePath = Join-Path -Path $userprofile -ChildPath ".azure-functions-core-tools\Functions\ExtensionBundles\Microsoft.Azure.Functions.ExtensionBundle.Workflows\1.1.3\bin\extensions.json"
+$extensionModulePath = Join-Path -Path $userprofile -ChildPath ".azure-functions-core-tools\Functions\ExtensionBundles\Microsoft.Azure.Functions.ExtensionBundle.Workflows\1.1.4\bin\extensions.json"
 
 $fullAssemlyName = [System.Reflection.AssemblyName]::GetAssemblyName($dll).FullName
 write-host "Full assembly name " + $fullAssemlyName
@@ -19,10 +19,11 @@ catch
   write-host "func.exe not found"
 }
 
+dotnet remove package "Microsoft.Azure.Workflows.ServiceProvider.Extensions.CosmosDB"
 dotnet add package "Microsoft.Azure.Workflows.ServiceProvider.Extensions.CosmosDB" --version 1.0.0  --source $extensionPath
 
 write-host 'Full assembly '+ $fullAssemlyName
-$typeFullName =  "":  "ServiceProviders.CosmosDb.Extensions.CosmosDbTriggerStartup, $fullAssemlyName"
+$typeFullName =  "ServiceProviders.CosmosDb.Extensions.CosmosDbTriggerStartup, $fullAssemlyName"
 
 $newNode =  [pscustomobject] @{ 
   name = $extensionNameServiceProvider

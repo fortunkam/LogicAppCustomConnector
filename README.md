@@ -1,3 +1,20 @@
+# Logic App Custom Connector with Actions Experiment
+This repo is a modified version of https://github.com/praveensri/LogicAppCustomConnector which includes an Action and some modified instructions for setup.
+
+Notes:
+The deploy.ps1 file needs to be copied and run from the context of the workflow project (not the extension)
+The deploy.ps1 file referenced the .azure-functions-core-tools\Functions\ExtensionBundles\Microsoft.Azure.Functions.ExtensionBundle.Workflows\1.1.3\bin\extensions.json folder.  On my machine this folder existed but wasn't the version used by the runtime.  I have updated this to version 1.1.4
+
+Each time I made changes to the extension I needed to update the version number in the project (and the deploy.ps1 file, dotnet add package)
+To ensure the correct version is applied I added a dotnet remove package to the deploy.ps1 file
+
+The operations have been moved from the `CosmosDbTriggerServiceOperationProvider` into dedicated files for each (and one for the API)
+
+The `DebugTest.cs` contains the new action, it defined the action and a manifest.  Right now the implementation of the action is in the `CosmosDbTriggerServiceOperationProvider.InvokeActionOperation` method, it will eventually be moved to the `DebugTest` class.
+
+Note: this exercise was all about getting the action working and not making it look pretty.  I can make not guarentees as to how performant this code is.
+
+
 # Logic App built-in custom connector
 Azure Logic App Custom Built in connectors
 Creating Custom Built-in connector for Logic App V2
